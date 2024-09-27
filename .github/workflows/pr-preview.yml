@@ -10,18 +10,24 @@ on:
 
 concurrency: preview-${{ github.ref }}
 
+permissions:
+  # Used by `pr-preview-action` to push pr preview build files to related branch
+  contents: write
+  # Used by `pr-preview-action` to leave a comment on the PR with the preview link
+  pull-requests: write
+
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Install dependencies and build storybook
         run: |
